@@ -34,6 +34,14 @@ else()
     set(ANDROID_APKSIGNER_KEY --ks $ENV{HOME}/.android/debug.keystore --ks-pass pass:android CACHE STRING "")
 endif()
 
+# Path to Android SDK. Env variable ANDROID_SDK has to be set for this option.
+if(NOT ANDROID_SDK)
+    if (DEFINED ENV{ANDROID_SDK})
+        message( STATUS "ANDROID_SDK is defined from environment variable $ENV{ANDROID_SDK}")
+        set(ANDROID_SDK $ENV{ANDROID_SDK} CACHE STRING "")
+    endif()
+endif()
+
 # Path to Android SDK. The build-tools/ subdirectory must exist.
 if(NOT ANDROID_SDK)
     get_filename_component(ANDROID_SDK ${CMAKE_ANDROID_NDK}/../android-sdk/ REALPATH CACHE)
